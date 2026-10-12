@@ -219,7 +219,6 @@ iconify-icon {
     max-width: 100%;
     height: auto;
     display: block;
-    /* Evita el arrastre visual */
     -webkit-user-drag: none;
     -khtml-user-drag: none;
     -moz-user-drag: none;
@@ -228,13 +227,7 @@ iconify-icon {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-
-    /* Evita el menú contextual táctil en móvil */
     -webkit-touch-callout: none;
-}
-
-::-webkit-scrollbar {
-    width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -2107,7 +2100,7 @@ metric-banner {
 #inventoryTable td:nth-child(2),
 #craftTable th:nth-child(2),
 #craftTable td:nth-child(2) {
-    width: 17%;
+    width: 20%;
 }
 
 #inventoryTable th:nth-child(3),
@@ -5121,11 +5114,12 @@ metric-banner {
     .table-wrapper {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain;
+        touch-action: pan-x pan-y;
     }
 
     .sortable-table {
-        min-width: 600px;
-        /* Reducimos de 700 a 600 */
+        min-width: 680px;
         font-size: 0.8rem;
     }
 
@@ -5133,6 +5127,101 @@ metric-banner {
     .sortable-table td {
         padding: 0.6rem 0.5rem;
         font-size: 0.75rem;
+    }
+
+    .sortable-table tbody {
+        overscroll-behavior-x: auto;
+        touch-action: pan-x pan-y;
+    }
+
+    .skill-branch {
+        min-width: 0;
+    }
+
+    .skill-branch .saas-table {
+        display: block;
+        width: 100%;
+    }
+
+    .skill-branch .saas-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    .skill-branch .saas-table tbody {
+        display: grid;
+        gap: 0.75rem;
+    }
+
+    .skill-branch .saas-table tbody tr {
+        display: grid;
+        grid-template-columns: minmax(3.25rem, 0.3fr) minmax(0, 1fr);
+        width: 100%;
+        overflow: hidden;
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-sm);
+        background: rgba(255, 255, 255, 0.025);
+    }
+
+    .skill-branch .saas-table tbody td {
+        display: block;
+        min-width: 0;
+        padding: 0.65rem 0.75rem;
+        border: 0;
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+
+    .skill-branch .saas-table tbody td::before {
+        display: block;
+        margin-bottom: 0.25rem;
+        color: var(--text-muted);
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        line-height: 1.2;
+        text-transform: uppercase;
+    }
+
+    .skill-branch .saas-table tbody td:nth-child(1) {
+        grid-column: 1;
+        grid-row: 1;
+        color: #fff;
+        font-weight: 700;
+    }
+
+    .skill-branch .saas-table tbody td:nth-child(1)::before {
+        content: "Nivel";
+    }
+
+    .skill-branch .saas-table tbody td:nth-child(2) {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .skill-branch .saas-table tbody td:nth-child(2)::before {
+        content: "Habilidad";
+    }
+
+    .skill-branch .saas-table tbody td:nth-child(3),
+    .skill-branch .saas-table tbody td:nth-child(4) {
+        grid-column: 1 / -1;
+        border-top: 1px solid var(--border-subtle);
+    }
+
+    .skill-branch .saas-table tbody td:nth-child(3)::before {
+        content: "Requisito";
+    }
+
+    .skill-branch .saas-table tbody td:nth-child(4)::before {
+        content: "Efecto";
     }
 
     /* ══════════════ 65 IDEAS (SPLIT VIEW) ══════════════ */
@@ -5181,6 +5270,78 @@ metric-banner {
     .spoiler-overlay[data-spoiler-type="twist"] {
         gap: 0.25rem 0.55rem;
         padding: 0.4rem 0.55rem;
+    }
+
+    .icon-container.mobile-heading-fit {
+        box-sizing: border-box;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .icon-container.mobile-heading-fit > .icon {
+        flex: 0 0 auto;
+    }
+
+    .icon-container.mobile-heading-fit > h2,
+    .icon-container.mobile-heading-fit > h3 {
+        flex: 1 1 0%;
+        min-width: 0;
+        font-size: clamp(0.78rem, 3.8vw, 0.95rem);
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+
+    .spoiler-overlay[data-spoiler-type="twist"] {
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        grid-template-rows: auto;
+        align-content: center;
+        gap: 0.25rem 0.55rem;
+        padding: 0.4rem 0.55rem;
+    }
+
+    .spoiler-overlay[data-spoiler-type="twist"] .spoiler-icon {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .spoiler-overlay[data-spoiler-type="twist"] .spoiler-message {
+        grid-column: 2;
+        grid-row: 1;
+        text-align: left;
+    }
+
+    .spoiler-overlay[data-spoiler-type="twist"] .spoiler-title,
+    .spoiler-overlay[data-spoiler-type="twist"] .spoiler-text {
+        text-align: left;
+    }
+
+    #spoiler-premisa .spoiler-message {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    #spoiler-premisa .spoiler-message .spoiler-text {
+        display: block;
+        flex: 0 0 auto;
+        width: 100%;
+        max-width: none;
+        font-size: 0.7rem;
+        line-height: 1.35;
+        text-align: left;
+        overflow-wrap: normal;
+        word-break: normal;
+    }
+
+    .spoiler-overlay[data-spoiler-type="twist"] .spoiler-btn {
+        grid-column: 3;
+        grid-row: 1;
+        justify-self: end;
+    }
+
+    #spoiler-premisa.spoiler-wrapper {
+        min-height: 5.5rem;
     }
 
     .spoiler-overlay[data-spoiler-type="identity"] {
@@ -5378,10 +5539,12 @@ metric-banner {
     .table-wrapper {
         width: 100%;
         overflow-x: auto;
+        overscroll-behavior-x: contain;
+        touch-action: pan-x pan-y;
     }
 
     .sortable-table {
-        min-width: 540px;
+        min-width: 680px;
     }
 
     .side-nav {

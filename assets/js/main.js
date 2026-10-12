@@ -354,6 +354,7 @@
       navigation.previousBodyOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
       window.cancelAnimationFrame(navigation.openFocusFrame);
+      if (window.matchMedia("(max-width: 768px)").matches) return;
       navigation.openFocusFrame = window.requestAnimationFrame(() => {
         if (drawer.classList.contains("open")) search?.focus();
       });

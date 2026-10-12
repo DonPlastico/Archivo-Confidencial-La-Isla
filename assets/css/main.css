@@ -855,7 +855,7 @@ iconify-icon {
     letter-spacing: 0.15em;
 }
 
-.hero-kicker > span:not(.hero-kicker-dot) {
+.hero-kicker>span:not(.hero-kicker-dot) {
     color: var(--text-muted);
 }
 
@@ -998,7 +998,7 @@ iconify-icon {
     letter-spacing: 0.12em;
 }
 
-.hero-visual-caption > span:first-child {
+.hero-visual-caption>span:first-child {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -1020,7 +1020,7 @@ iconify-icon {
     border-bottom: 1px solid var(--border-faint);
 }
 
-.hero-shortcuts > a {
+.hero-shortcuts>a {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
@@ -1032,12 +1032,12 @@ iconify-icon {
     transition: background var(--t-fast), color var(--t-fast);
 }
 
-.hero-shortcuts > a + a {
+.hero-shortcuts>a+a {
     border-left: 1px solid var(--border-subtle);
 }
 
-.hero-shortcuts > a:hover,
-.hero-shortcuts > a:focus-visible {
+.hero-shortcuts>a:hover,
+.hero-shortcuts>a:focus-visible {
     background: rgba(255, 255, 255, 0.045);
 }
 
@@ -1069,15 +1069,15 @@ iconify-icon {
     transition: color var(--t-fast), transform var(--t-fast);
 }
 
-.hero-shortcuts > a:hover iconify-icon,
-.hero-shortcuts > a:focus-visible iconify-icon {
+.hero-shortcuts>a:hover iconify-icon,
+.hero-shortcuts>a:focus-visible iconify-icon {
     color: var(--text-primary);
     transform: translate(2px, -2px);
 }
 
 /* Entrada escalonada de la portada */
-.hero-intro-pending .hero-content > *,
-.hero-intro-visible .hero-content > * {
+.hero-intro-pending .hero-content>*,
+.hero-intro-visible .hero-content>* {
     opacity: 0;
     translate: 0 14px;
     transition:
@@ -1085,35 +1085,35 @@ iconify-icon {
         translate 650ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.hero-intro-visible .hero-content > * {
+.hero-intro-visible .hero-content>* {
     opacity: 1;
     translate: 0 0;
 }
 
-.hero-intro-visible .hero-content > :nth-child(1) {
+.hero-intro-visible .hero-content> :nth-child(1) {
     transition-delay: 60ms;
 }
 
-.hero-intro-visible .hero-content > :nth-child(2) {
+.hero-intro-visible .hero-content> :nth-child(2) {
     transition-delay: 130ms;
 }
 
-.hero-intro-visible .hero-content > :nth-child(3) {
+.hero-intro-visible .hero-content> :nth-child(3) {
     transition-delay: 200ms;
 }
 
-.hero-intro-visible .hero-content > :nth-child(4) {
+.hero-intro-visible .hero-content> :nth-child(4) {
     transition-delay: 270ms;
 }
 
-.hero-intro-visible .hero-content > :nth-child(5) {
+.hero-intro-visible .hero-content> :nth-child(5) {
     transition-delay: 340ms;
 }
 
-.hero-intro-pending .hero-actions > *,
-.hero-intro-visible .hero-actions > *,
-.hero-intro-pending .hero-shortcuts > a,
-.hero-intro-visible .hero-shortcuts > a {
+.hero-intro-pending .hero-actions>*,
+.hero-intro-visible .hero-actions>*,
+.hero-intro-pending .hero-shortcuts>a,
+.hero-intro-visible .hero-shortcuts>a {
     opacity: 0;
     translate: 0 8px;
     transition:
@@ -1121,23 +1121,23 @@ iconify-icon {
         translate 450ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.hero-intro-visible .hero-actions > *,
-.hero-intro-visible .hero-shortcuts > a {
+.hero-intro-visible .hero-actions>*,
+.hero-intro-visible .hero-shortcuts>a {
     opacity: 1;
     translate: 0 0;
 }
 
-.hero-intro-visible .hero-actions > :nth-child(1),
-.hero-intro-visible .hero-shortcuts > :nth-child(1) {
+.hero-intro-visible .hero-actions> :nth-child(1),
+.hero-intro-visible .hero-shortcuts> :nth-child(1) {
     transition-delay: 390ms;
 }
 
-.hero-intro-visible .hero-actions > :nth-child(2),
-.hero-intro-visible .hero-shortcuts > :nth-child(2) {
+.hero-intro-visible .hero-actions> :nth-child(2),
+.hero-intro-visible .hero-shortcuts> :nth-child(2) {
     transition-delay: 470ms;
 }
 
-.hero-intro-visible .hero-shortcuts > :nth-child(3) {
+.hero-intro-visible .hero-shortcuts> :nth-child(3) {
     transition-delay: 550ms;
 }
 
@@ -1483,13 +1483,13 @@ h3 {
     color: var(--text-muted);
 }
 
-.feature-list li > b {
+.feature-list li>b {
     display: inline-flex;
     align-items: baseline;
     gap: 0.25rem;
 }
 
-.feature-list li > b iconify-icon {
+.feature-list li>b iconify-icon {
     flex: 0 0 auto;
 }
 
@@ -4165,7 +4165,7 @@ metric-banner {
     min-height: 4.2rem;
 }
 
-.mission-item-classified:not(.mission-item-revealed) > td {
+.mission-item-classified:not(.mission-item-revealed)>td {
     width: auto;
     min-width: 0;
 }
@@ -4668,20 +4668,18 @@ metric-banner {
         transition: opacity 180ms ease;
     }
 
-    .border-trail > span {
+    .border-trail>span {
         position: absolute;
         top: 0;
         left: 0;
         width: 64px;
         height: 64px;
         border-radius: 50%;
-        background: radial-gradient(
-            circle,
-            rgba(255, 255, 255, 0.95) 0,
-            rgba(255, 255, 255, 0.5) 18%,
-            rgba(255, 255, 255, 0.12) 45%,
-            transparent 72%
-        );
+        background: radial-gradient(circle,
+                rgba(255, 255, 255, 0.95) 0,
+                rgba(255, 255, 255, 0.5) 18%,
+                rgba(255, 255, 255, 0.12) 45%,
+                transparent 72%);
         box-shadow: 0 0 22px 8px rgba(255, 255, 255, 0.36);
         offset-path: rect(0 auto auto 0 round 12px);
         offset-anchor: center;
@@ -4691,54 +4689,55 @@ metric-banner {
         animation-play-state: paused;
     }
 
-    .bento-card:hover > .border-trail,
-    .skill-card:hover > .border-trail,
-    .mini-card:hover > .border-trail,
-    .core-item:hover > .border-trail,
-    .mission-card:hover > .border-trail,
-    .mission-secondary-item:hover > .border-trail,
-    .mission-tl-body:hover > .border-trail,
-    .mission-hidden-item:hover > .border-trail,
-    .punish-card:hover > .border-trail,
-    .npc-profile:hover > .border-trail,
-    .trust-level:hover > .border-trail,
-    .subconscious-card:hover > .border-trail,
-    .achievement-card:hover > .border-trail,
-    .achievement-card-hidden:hover > .border-trail,
-    .save-feature:hover > .border-trail,
-    .save-feature-gold:hover > .border-trail,
-    .idea-list-item:hover > .border-trail {
+    .bento-card:hover>.border-trail,
+    .skill-card:hover>.border-trail,
+    .mini-card:hover>.border-trail,
+    .core-item:hover>.border-trail,
+    .mission-card:hover>.border-trail,
+    .mission-secondary-item:hover>.border-trail,
+    .mission-tl-body:hover>.border-trail,
+    .mission-hidden-item:hover>.border-trail,
+    .punish-card:hover>.border-trail,
+    .npc-profile:hover>.border-trail,
+    .trust-level:hover>.border-trail,
+    .subconscious-card:hover>.border-trail,
+    .achievement-card:hover>.border-trail,
+    .achievement-card-hidden:hover>.border-trail,
+    .save-feature:hover>.border-trail,
+    .save-feature-gold:hover>.border-trail,
+    .idea-list-item:hover>.border-trail {
         opacity: 1;
     }
 
-    .bento-card:hover > .border-trail > span,
-    .skill-card:hover > .border-trail > span,
-    .mini-card:hover > .border-trail > span,
-    .core-item:hover > .border-trail > span,
-    .mission-card:hover > .border-trail > span,
-    .mission-secondary-item:hover > .border-trail > span,
-    .mission-tl-body:hover > .border-trail > span,
-    .mission-hidden-item:hover > .border-trail > span,
-    .punish-card:hover > .border-trail > span,
-    .npc-profile:hover > .border-trail > span,
-    .trust-level:hover > .border-trail > span,
-    .subconscious-card:hover > .border-trail > span,
-    .achievement-card:hover > .border-trail > span,
-    .achievement-card-hidden:hover > .border-trail > span,
-    .save-feature:hover > .border-trail > span,
-    .save-feature-gold:hover > .border-trail > span,
-    .idea-list-item:hover > .border-trail > span {
+    .bento-card:hover>.border-trail>span,
+    .skill-card:hover>.border-trail>span,
+    .mini-card:hover>.border-trail>span,
+    .core-item:hover>.border-trail>span,
+    .mission-card:hover>.border-trail>span,
+    .mission-secondary-item:hover>.border-trail>span,
+    .mission-tl-body:hover>.border-trail>span,
+    .mission-hidden-item:hover>.border-trail>span,
+    .punish-card:hover>.border-trail>span,
+    .npc-profile:hover>.border-trail>span,
+    .trust-level:hover>.border-trail>span,
+    .subconscious-card:hover>.border-trail>span,
+    .achievement-card:hover>.border-trail>span,
+    .achievement-card-hidden:hover>.border-trail>span,
+    .save-feature:hover>.border-trail>span,
+    .save-feature-gold:hover>.border-trail>span,
+    .idea-list-item:hover>.border-trail>span {
         animation-play-state: running;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .hero-intro-pending .hero-content > *,
-    .hero-intro-visible .hero-content > *,
-    .hero-intro-pending .hero-actions > *,
-    .hero-intro-visible .hero-actions > *,
-    .hero-intro-pending .hero-shortcuts > a,
-    .hero-intro-visible .hero-shortcuts > a,
+
+    .hero-intro-pending .hero-content>*,
+    .hero-intro-visible .hero-content>*,
+    .hero-intro-pending .hero-actions>*,
+    .hero-intro-visible .hero-actions>*,
+    .hero-intro-pending .hero-shortcuts>a,
+    .hero-intro-visible .hero-shortcuts>a,
     .hero-intro-pending .hero-visual,
     .hero-intro-visible .hero-visual,
     .hero-intro-pending .hero-shortcuts,
@@ -4758,7 +4757,7 @@ metric-banner {
         will-change: auto;
     }
 
-    .border-trail > span {
+    .border-trail>span {
         animation: none !important;
     }
 }
@@ -5282,12 +5281,12 @@ metric-banner {
         width: 100%;
     }
 
-    .icon-container.mobile-heading-fit > .icon {
+    .icon-container.mobile-heading-fit>.icon {
         flex: 0 0 auto;
     }
 
-    .icon-container.mobile-heading-fit > h2,
-    .icon-container.mobile-heading-fit > h3 {
+    .icon-container.mobile-heading-fit>h2,
+    .icon-container.mobile-heading-fit>h3 {
         flex: 1 1 0%;
         min-width: 0;
         font-size: clamp(0.78rem, 3.8vw, 0.95rem);

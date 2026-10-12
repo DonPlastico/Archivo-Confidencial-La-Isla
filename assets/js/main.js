@@ -18,6 +18,7 @@
     if (!canvas || !context) return;
 
     const particles = [];
+    const marks = [];
     let width = window.innerWidth;
     let height = window.innerHeight;
     let lastFrameTime = 0;
@@ -35,14 +36,20 @@
         this.y = Math.random() * height;
         this.velocityX = (Math.random() - 0.5) * 0.035;
         this.velocityY = (Math.random() - 0.5) * 0.035;
-        this.size = Math.random() * 1.15 + 0.45;
+        this.size = Math.random() * 1.8 + 0.55;
         this.drift = Math.random() * Math.PI * 2;
         this.twinkleOffset = Math.random() * Math.PI * 2;
         this.parallax = Math.random() * 0.035 + 0.01;
-        this.glow = Math.random() < 0.12;
+        this.shade = Math.floor(Math.random() * 141) + 115;
+        this.opacity = Math.random() * 0.48 + 0.2;
+        this.trail = [];
+        this.trailElapsed = 0;
+        this.markDistance = Math.random() * 120;
       }
 
       update(delta) {
+        const previousX = this.x;
+        const previousY = this.y;
         this.x += this.velocityX * delta;
         this.y += this.velocityY * delta;
         this.drift += delta * (0.00008 + this.parallax * 0.001);
@@ -50,10 +57,40 @@
         this.x += Math.sin(this.drift) * 0.035 * delta;
         this.y += Math.cos(this.drift * 0.7) * 0.025 * delta;
 
+        const wrapped = this.x < -4 || this.x > width + 4 || this.y < -4 || this.y > height + 4;
         if (this.x < -4) this.x = width + 4;
         else if (this.x > width + 4) this.x = -4;
         if (this.y < -4) this.y = height + 4;
         else if (this.y > height + 4) this.y = -4;
+
+        if (wrapped) {
+          this.trail.length = 0;
+          this.markDistance = 0;
+          return;
+        }
+
+        const distance = Math.hypot(this.x - previousX, this.y - previousY);
+        this.markDistance += distance;
+        this.trailElapsed += delta;
+        if (this.trailElapsed >= 80) {
+          this.trail.push({ x: this.x, y: this.y });
+          this.trailElapsed = 0;
+          if (this.trail.length > 14) this.trail.shift();
+        }
+
+        if (this.markDistance >= 168) {
+          marks.push({
+            x: this.x,
+            y: this.y,
+            size: this.size * (0.55 + Math.random() * 0.55),
+            shade: this.shade,
+            opacity: this.opacity * 0.4,
+            age: 0,
+            lifetime: 16000 + Math.random() * 12000,
+          });
+          this.markDistance = 0;
+          if (marks.length > 180) marks.shift();
+        }
       }
 
       draw() {
@@ -61,15 +98,25 @@
         const x = this.x + pointer.x * this.parallax;
         const y = this.y + pointer.y * this.parallax;
         const radius = this.size * (0.65 + twinkle * 0.65);
-        const opacity = 0.16 + twinkle * 0.36;
+        const opacity = this.opacity * (0.55 + twinkle * 0.45);
 
-        context.shadowColor = "rgba(235, 235, 240, 0.7)";
-        context.shadowBlur = this.glow ? 8 : 0;
-        context.fillStyle = `rgba(245, 245, 248, ${opacity})`;
+        if (this.trail.length > 1) {
+          context.beginPath();
+          this.trail.forEach((point, index) => {
+            const trailX = point.x + pointer.x * this.parallax;
+            const trailY = point.y + pointer.y * this.parallax;
+            if (index === 0) context.moveTo(trailX, trailY);
+            else context.lineTo(trailX, trailY);
+          });
+          context.strokeStyle = `rgba(${this.shade}, ${this.shade}, ${this.shade}, ${opacity * 0.42})`;
+          context.lineWidth = Math.max(0.5, this.size * 0.42);
+          context.stroke();
+        }
+
+        context.fillStyle = `rgba(${this.shade}, ${this.shade}, ${this.shade}, ${opacity})`;
         context.beginPath();
         context.arc(x, y, radius, 0, Math.PI * 2);
         context.fill();
-        context.shadowBlur = 0;
       }
     }
 
@@ -84,13 +131,25 @@
     }
 
     function resizeParticles() {
-      const particleCount = mobileLayout.matches ? 90 : 190;
+      const particleCount = mobileLayout.matches ? 140 : 280;
       particles.length = 0;
       while (particles.length < particleCount) particles.push(new OrbParticle());
+      marks.length = 0;
     }
 
     function renderFrame(delta = 16) {
       context.clearRect(0, 0, width, height);
+      marks.forEach((mark) => {
+        mark.age += delta;
+        const opacity = mark.opacity * Math.max(0, 1 - mark.age / mark.lifetime);
+        context.fillStyle = `rgba(${mark.shade}, ${mark.shade}, ${mark.shade}, ${opacity})`;
+        context.beginPath();
+        context.arc(mark.x, mark.y, mark.size, 0, Math.PI * 2);
+        context.fill();
+      });
+      for (let index = marks.length - 1; index >= 0; index--) {
+        if (marks[index].age >= marks[index].lifetime) marks.splice(index, 1);
+      }
 
       if (!reducedMotion.matches) {
         const easing = 1 - Math.pow(0.94, delta / 16);
@@ -171,117 +230,6 @@
   }
 
   // ============================================================
-  // APARICIONES VISUALES, SILENCIOSAS Y ESPORÁDICAS
-  // ============================================================
-  function initHorrorAppearances() {
-    if (reducedMotion.matches) return;
-
-    const layer = document.createElement("div");
-    layer.className = "horror-ambience";
-    layer.setAttribute("aria-hidden", "true");
-    document.body.append(layer);
-
-    const icons = [
-      {
-        className: "horror-omen--apparition",
-        paths: [
-          "M12 3a8 8 0 0 0-8 8v9l3-2 3 2 2-2 2 2 3-2 3 2v-9a8 8 0 0 0-8-8Z",
-          "M9 10h.01M15 10h.01M9 16q3-2 6 0",
-        ],
-      },
-      {
-        className: "horror-omen--watcher",
-        paths: [
-          "M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6Z",
-          "M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z",
-        ],
-      },
-      {
-        className: "horror-omen--hand",
-        paths: [
-          "M8 21v-6.5a1.5 1.5 0 0 1 3 0V7a1.5 1.5 0 0 1 3 0v7-4a1.5 1.5 0 0 1 3 0v5-2a1.5 1.5 0 0 1 3 0v5.5A5.5 5.5 0 0 1 14.5 24h-2A4.5 4.5 0 0 1 8 21Z",
-        ],
-      },
-      {
-        className: "horror-omen--screamer",
-        paths: [
-          "M12 3a8 8 0 0 0-8 8c0 3 1.3 5.2 3 6.6V21h10v-3.4c1.7-1.4 3-3.6 3-6.6a8 8 0 0 0-8-8Z",
-          "M10 11a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM17 11a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM10 17h4m-4 4v-2m2 2v-2m2 2v-2",
-        ],
-      },
-    ];
-    let timer = 0;
-    let lastAppearance = 0;
-    let lastInteraction = 0;
-
-    function appear() {
-      if (document.hidden || reducedMotion.matches || Date.now() - lastAppearance < 9000) return;
-      lastAppearance = Date.now();
-
-      const roll = Math.random();
-      const omen =
-        roll > 0.965
-          ? icons[3]
-          : roll > 0.76
-            ? icons[Math.floor(Math.random() * 3)]
-            : icons[0];
-      const apparition = document.createElement("span");
-      const isRare = omen === icons[3];
-
-      apparition.className = `horror-omen ${omen.className}`;
-      apparition.style.setProperty("--omen-left", `${8 + Math.random() * 84}%`);
-      apparition.style.setProperty("--omen-top", `${12 + Math.random() * 70}%`);
-      apparition.style.setProperty("--omen-duration", `${isRare ? 720 : 1900 + Math.random() * 900}ms`);
-      const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      icon.setAttribute("viewBox", "0 0 24 24");
-      icon.setAttribute("aria-hidden", "true");
-      icon.setAttribute("focusable", "false");
-      omen.paths.forEach((pathData) => {
-        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        path.setAttribute("d", pathData);
-        icon.append(path);
-      });
-      apparition.append(icon);
-      layer.append(apparition);
-      window.setTimeout(() => apparition.remove(), isRare ? 900 : 3100);
-    }
-
-    function scheduleAppearance() {
-      window.clearTimeout(timer);
-      if (document.hidden || reducedMotion.matches) return;
-      timer = window.setTimeout(() => {
-        if (Math.random() > 0.3) appear();
-        scheduleAppearance();
-      }, 18000 + Math.random() * 22000);
-    }
-
-    document.addEventListener("click", (event) => {
-      const target = event.target;
-      if (!(target instanceof Element)) return;
-      const meaningfulInteraction = target.closest(
-        ".spoiler-overlay, .mission-accordion-header, .idea-list-item, .hero-shortcuts a, #sideNavLinks a",
-      );
-      if (!meaningfulInteraction || Date.now() - lastInteraction < 12000) return;
-
-      lastInteraction = Date.now();
-      if (Math.random() > 0.78) appear();
-    });
-
-    document.addEventListener("visibilitychange", scheduleAppearance);
-    if (typeof reducedMotion.addEventListener === "function") {
-      reducedMotion.addEventListener("change", () => {
-        if (reducedMotion.matches) {
-          window.clearTimeout(timer);
-          layer.replaceChildren();
-        } else {
-          scheduleAppearance();
-        }
-      });
-    }
-    scheduleAppearance();
-  }
-
-  // ============================================================
   // REVELADO DE TARJETAS AL DESPLAZARSE
   // ============================================================
   function initScrollReveal() {
@@ -298,7 +246,9 @@
 
     if (!("IntersectionObserver" in window) || reducedMotion.matches) return;
 
-    const revealItems = selectors.all(".content-category, .bento-card");
+    const revealItems = selectors
+      .all(".content-category, .bento-card")
+      .filter((item) => item.id !== "inventario" && item.id !== "crafteo");
     if (revealItems.length === 0) return;
 
     const observer = new IntersectionObserver(
@@ -606,6 +556,15 @@
         filterButtons[0],
     );
 
+    const tableBody = table.tBodies[0];
+    function syncHeaderWidth() {
+      if (!table.tHead || !tableBody) return;
+      const scrollbarWidth = tableBody.offsetWidth - tableBody.clientWidth;
+      table.style.setProperty("--table-scrollbar-width", `${scrollbarWidth}px`);
+    }
+    syncHeaderWidth();
+    window.addEventListener("resize", syncHeaderWidth, { passive: true });
+
     const headers = Array.from(table.querySelectorAll("th.sortable[data-sort]"));
     const collator = new Intl.Collator("es", { numeric: true, sensitivity: "base" });
     let sortState = { column: null, ascending: true };
@@ -624,18 +583,28 @@
       headers.forEach((candidate) => {
         candidate.classList.remove("sorted-asc", "sorted-desc");
         candidate.removeAttribute("aria-sort");
+        const icon = candidate.querySelector(".sort-icon");
+        if (icon) icon.textContent = "↕";
       });
       header.classList.add(ascending ? "sorted-asc" : "sorted-desc");
       header.setAttribute("aria-sort", ascending ? "ascending" : "descending");
+      const sortIcon = header.querySelector(".sort-icon");
+      if (sortIcon) sortIcon.textContent = ascending ? "↑" : "↓";
       if (!header.hasAttribute("tabindex")) header.tabIndex = 0;
 
       const sortedRows = rows
         .map((row, index) => ({
           row,
           index,
-          value: normalizeCellText(row.cells[cellIndex]?.textContent || ""),
+          value: normalizeCellText(
+            row.cells[cellIndex]?.dataset.sortValue || row.cells[cellIndex]?.textContent || "",
+          ),
         }))
         .sort((a, b) => {
+          const aMission = a.row.classList.contains("mission-item-classified");
+          const bMission = b.row.classList.contains("mission-item-classified");
+          if (aMission !== bMission) return aMission ? 1 : -1;
+
           const comparison = collator.compare(a.value, b.value);
           return comparison === 0
             ? a.index - b.index
@@ -658,6 +627,8 @@
   }
 
   function initTables() {
+    initTableSpoilers();
+
     initFilterableTable({
       filterId: "inventoryFilters",
       bodyId: "inventoryBody",
@@ -672,6 +643,174 @@
       tableId: "craftTable",
       countId: "craftVisibleCount",
       columns: { name: 0, category: 1, detail: 2, extra: 3 },
+    });
+  }
+
+  function initAchievementCatalog() {
+    const grid = selectors.one("#logros .achievements-grid");
+    if (!grid) return;
+
+    const achievements = [
+      ["Primeros auxilios", "Usa un consumible por primera vez.", "ph:first-aid-kit"],
+      ["Sin mirar atrás", "Cruza una zona exterior durante la noche.", "ph:moon-stars-fill"],
+      ["La luz aguanta", "Completa un tramo con la misma fuente de luz.", "ph:flashlight-fill"],
+      ["Manos ocupadas", "Llena todos los espacios del inventario.", "ph:backpack-fill"],
+      ["Nada se desperdicia", "Fabrica un objeto usando materiales recogidos.", "ph:hammer-fill"],
+      ["Un lugar seguro", "Descansa por primera vez junto a una hoguera.", "ph:campfire-fill"],
+      ["Oído atento", "Evita una amenaza guiándote solo por el sonido.", "ph:ear-fill"],
+      ["La isla escribe", "Lee una nota que cambie tu interpretación de una zona.", "ph:notebook-fill"],
+      ["Punto de referencia", "Consulta el GPS en tres zonas distintas.", "ph:map-pin-fill"],
+      ["Grabado en cinta", "Registra una anomalía con la cámara de vídeo.", "ph:video-camera-fill"],
+      ["A oscuras", "Sobrevive a un apagón sin recibir daño.", "ph:lightning-slash-fill"],
+      ["Paso ligero", "Cruza una zona vigilada sin hacer ruido.", "ph:footprints-fill"],
+      ["Manitas", "Repara un dispositivo en una mesa de trabajo.", "ph:wrench-fill"],
+      ["Una mano amiga", "Completa una petición de un superviviente.", "ph:handshake-fill"],
+      ["Palabra cumplida", "Mantén una promesa hecha a un NPC.", "ph:seal-check-fill"],
+      ["La ruta larga", "Visita todas las zonas exteriores.", "ph:signpost-fill"],
+      ["Piedra angular", "Reúne materiales de tres categorías distintas.", "ph:shapes-fill"],
+      ["Sin dejar rastro", "Escapa de una persecución sin usar objetos arrojadizos.", "ph:person-simple-run-fill"],
+      ["Hilo de Ariadna", "Regresa a una zona segura desde las ruinas.", "ph:git-branch-fill"],
+      ["El último fósforo", "Enciende una antorcha cuando la luz esté a punto de agotarse.", "ph:fire-fill"],
+      ["Voces conocidas", "Escucha todos los mensajes de una grabadora.", "ph:waveform-fill"],
+      ["Testigo incómodo", "Registra una aparición y vuelve a verla en el archivo.", "ph:eye-fill"],
+      ["Ojos abiertos", "Detecta una pista antes de que aparezca en el diario.", "ph:eye-fill"],
+      ["Todo en orden", "Organiza el inventario sin descartar objetos.", "ph:rows-fill"],
+      ["Costura de emergencia", "Repara una prenda durante la expedición.", "ph:needle-fill"],
+      ["Calor prestado", "Cocina una ración en una hoguera.", "ph:cooking-pot-fill"],
+      ["No era el viento", "Sobrevive a tu primer encuentro con una entidad.", "ph:wind-fill"],
+      ["Cinta completa", "Reproduce una grabación hasta el final.", "ph:film-strip-fill"],
+      ["Trabajo de campo", "Encuentra una pista en cada tipo de zona.", "ph:magnifying-glass-fill"],
+      ["La llave correcta", "Abre una puerta cerrada sin romper la ganzúa.", "ph:key-fill"],
+      ["Aguanta un poco más", "Termina un capítulo con la Cordura por debajo del 25%.", "ph:heartbeat-fill"],
+      ["Sin perder el hilo", "Completa dos objetivos seguidos sin consultar el diario.", "ph:book-open-fill"],
+      ["Recuerdo recuperado", "Completa la misión El Peso del Recuerdo.", "ph:ear-fill"],
+      ...Array.from({ length: 12 }, () => ({ hidden: true })),
+    ];
+
+    achievements.forEach((achievement) => {
+      const hidden = achievement.hidden === true;
+      const card = document.createElement("div");
+      card.className = hidden
+        ? "achievement-card achievement-card-hidden"
+        : "achievement-card";
+
+      const iconBox = document.createElement("div");
+      iconBox.className = "achievement-icon";
+      const icon = document.createElement("iconify-icon");
+      icon.setAttribute("icon", hidden ? "ph:lock-fill" : achievement[2]);
+      icon.setAttribute("aria-hidden", "true");
+      iconBox.append(icon);
+
+      const body = document.createElement("div");
+      body.className = "achievement-body";
+      const name = document.createElement("div");
+      name.className = "achievement-name";
+      name.textContent = hidden ? "Logro oculto" : achievement[0];
+      const description = document.createElement("div");
+      description.className = "achievement-desc";
+      description.textContent = hidden
+        ? "Se revelará al desbloquearlo."
+        : achievement[1];
+      body.append(name, description);
+
+      const status = document.createElement("div");
+      status.className = "achievement-status";
+      const statusIcon = document.createElement("iconify-icon");
+      statusIcon.setAttribute("icon", hidden ? "ph:lock-fill" : "ph:circle-fill");
+      statusIcon.setAttribute("aria-hidden", "true");
+      status.append(statusIcon);
+      card.append(iconBox, body, status);
+      grid.append(card);
+    });
+
+    grid.querySelectorAll(".achievement-card-hidden").forEach((card) => grid.append(card));
+
+    const count = grid.querySelectorAll(".achievement-card").length;
+    const summary = selectors.one("#logros .achievement-count");
+    if (summary) summary.textContent = String(count);
+  }
+
+  function initTableSpoilers() {
+    const inventoryRows = selectors.all("#inventoryBody tr");
+    const craftRows = selectors.all("#craftBody tr");
+
+    function protectCell(cell, label, column) {
+      if (!cell || cell.querySelector("details.table-spoiler")) return;
+      cell.dataset.sortValue = cell.textContent.trim();
+
+      const details = document.createElement("details");
+      details.className = "table-spoiler";
+      const summary = document.createElement("summary");
+      summary.textContent = label;
+      const content = document.createElement("span");
+      content.className = "table-spoiler-content";
+      content.dataset.column = column;
+      while (cell.firstChild) content.append(cell.firstChild);
+      details.append(summary, content);
+      cell.append(details);
+    }
+
+    function protectMissionRow(row) {
+      if (row.dataset.spoilerReady === "true") return;
+      row.dataset.spoilerReady = "true";
+      row.classList.add("mission-item-classified");
+
+      Array.from(row.cells).forEach((cell) => {
+        cell.dataset.sortValue = cell.textContent.trim();
+        const content = document.createElement("span");
+        content.className = "mission-item-content";
+        content.setAttribute("aria-hidden", "true");
+        content.inert = true;
+        while (cell.firstChild) content.append(cell.firstChild);
+        cell.append(content);
+      });
+
+      const reveal = document.createElement("button");
+      reveal.className = "mission-item-reveal";
+      reveal.type = "button";
+      reveal.setAttribute("aria-expanded", "false");
+      const icon = document.createElement("iconify-icon");
+      icon.setAttribute("icon", "ph:lock-key-fill");
+      icon.setAttribute("aria-hidden", "true");
+      reveal.append(icon, document.createTextNode("Contenido de misión · revelar"));
+      row.cells[0].prepend(reveal);
+
+      reveal.addEventListener("click", () => {
+        row.classList.add("mission-item-revealed");
+        row.querySelectorAll(".mission-item-content").forEach((content) => {
+          content.setAttribute("aria-hidden", "false");
+          content.inert = false;
+        });
+        reveal.remove();
+      });
+    }
+
+    inventoryRows.forEach((row) => {
+      const category = normalizeSearchText(row.dataset.category || "");
+      if (category === "mision") {
+        protectMissionRow(row);
+        return;
+      }
+      const detailLabel = ["consumible", "herramienta"].includes(category)
+        ? "Ver uso"
+        : "Ver descripción";
+      protectCell(row.cells[2], detailLabel, "usage");
+      protectCell(row.cells[3], "Ver procedencia", "source");
+    });
+
+    craftRows.forEach((row) => {
+      if (row.cells[0]?.textContent.trim() === "Casco Balsa") {
+        protectMissionRow(row);
+        return;
+      }
+      if (normalizeCellText(row.dataset.category || "") === "receta") {
+        protectCell(row.cells[2], "Ver ingredientes", "ingredients");
+        protectCell(row.cells[3], "Ver desbloqueo", "unlock");
+      }
+    });
+
+    [selectors.byId("inventoryBody"), selectors.byId("craftBody")].forEach((body) => {
+      body?.querySelectorAll(".mission-item-classified").forEach((row) => body.append(row));
     });
   }
 
@@ -839,7 +978,7 @@
   // SPOILERS Y ADAPTACIÓN DEL OVERLAY
   // ============================================================
   function initSpoilers() {
-    const wrappers = selectors.all(".spoiler-wrapper");
+    const wrappers = selectors.all(".spoiler-wrapper.locked");
     if (wrappers.length === 0) return;
 
     function updateLayout(wrapper) {
@@ -866,8 +1005,13 @@
 
       const wrapper = overlay.closest(".spoiler-wrapper");
       if (!wrapper || wrapper.classList.contains("unlocked")) return;
+      const content = wrapper.querySelector(".spoiler-content");
       wrapper.classList.remove("locked");
       wrapper.classList.add("unlocked");
+      if (content) {
+        content.inert = false;
+        content.setAttribute("aria-hidden", "false");
+      }
       overlay.setAttribute("aria-hidden", "true");
       overlay.setAttribute("aria-expanded", "true");
       scheduleLayout();
@@ -886,11 +1030,25 @@
       if (overlay) {
         overlay.tabIndex = 0;
         overlay.setAttribute("role", "button");
-        overlay.setAttribute("aria-label", "Revelar contenido marcado como spoiler");
+        const title = overlay.querySelector(".spoiler-title")?.textContent.trim();
+        const message = overlay.querySelector(".spoiler-text")?.textContent.trim();
+        const action = overlay.querySelector(".spoiler-btn")?.textContent.trim();
+        overlay.setAttribute(
+          "aria-label",
+          [title, message, action]
+            .filter(Boolean)
+            .map((part) => part.replace(/[.!?]+$/, ""))
+            .join(". ") || "Revelar contenido oculto",
+        );
         overlay.setAttribute(
           "aria-expanded",
           String(wrapper.classList.contains("unlocked")),
         );
+      }
+      const content = wrapper.querySelector(".spoiler-content");
+      if (content) {
+        content.inert = true;
+        content.setAttribute("aria-hidden", "true");
       }
     });
 
@@ -1021,11 +1179,11 @@
   // ============================================================
   function init() {
     initOrbitCanvas();
-    initHorrorAppearances();
     initScrollReveal();
     initHeroParallax();
     initNavigation();
     initTables();
+    initAchievementCatalog();
     initInteractiveTabs();
     initMissionAccordions();
     initIdeaSelector();

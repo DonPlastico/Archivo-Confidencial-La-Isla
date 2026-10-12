@@ -4,10 +4,41 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Archivo Confidencial: La Isla — Documentación de Diseño</title>
+    <meta
+      name="description"
+      content="Explora el archivo de diseño de La Isla: su historia, supervivientes, sistemas de juego, objetos, misiones y secretos." />
+    <link rel="canonical" href="https://donplastico.github.io/Archivo-Confidencial-La-isla/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:url" content="https://donplastico.github.io/Archivo-Confidencial-La-isla/" />
+    <meta property="og:title" content="Archivo Confidencial: La Isla" />
+    <meta
+      property="og:description"
+      content="Una isla, un archivo y una verdad enterrada. Explora la documentación de diseño, historia y secretos." />
+    <meta
+      property="og:image"
+      content="https://donplastico.github.io/Archivo-Confidencial-La-isla/assets/images/social-preview.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Archivo Confidencial: La Isla — documentación de diseño, historia, supervivencia y misterio." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Archivo Confidencial: La Isla" />
+    <meta
+      name="twitter:description"
+      content="Una isla, un archivo y una verdad enterrada. Explora la documentación de diseño, historia y secretos." />
+    <meta
+      name="twitter:image"
+      content="https://donplastico.github.io/Archivo-Confidencial-La-isla/assets/images/social-preview.png" />
+    <meta
+      name="twitter:image:alt"
+      content="Archivo Confidencial: La Isla — documentación de diseño, historia, supervivencia y misterio." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400&family=Rubik+Wet+Paint&display=swap"
       rel="stylesheet" />
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -242,15 +273,25 @@
               <h2>La Premisa Central</h2>
             </div>
           </div>
-          <p class="text-muted">
+          <div class="text-muted">
             El protagonista despierta en un complejo decadente sin recordar nada. A lo largo de
             la partida, el jugador va reconstruyendo la verdad:
-            <b
-              >no está en una cárcel abandonada, está en un antiguo psiquiátrico
-              penitenciario.</b
-            >
+            <div class="spoiler-wrapper locked spoiler-inline" id="spoiler-premisa">
+              <div class="spoiler-content">
+                <b>La verdad:</b> no está en una cárcel abandonada, sino en un antiguo
+                psiquiátrico penitenciario.
+              </div>
+              <div class="spoiler-overlay" data-spoiler-type="twist">
+                <iconify-icon class="spoiler-icon" icon="ph:eye-slash-fill"></iconify-icon>
+                <span class="spoiler-message">
+                  <span class="spoiler-title">GIRO DE LA PREMISA</span>
+                  <span class="spoiler-text">La isla oculta su verdadera función.</span>
+                </span>
+                <span class="spoiler-btn">Revelar</span>
+              </div>
+            </div>
             El personaje tampoco lo sabe al principio.
-          </p>
+          </div>
 
           <div class="img-wrapper html-style-e6ac13a0">
             <span>[Imagen: protagonista_despertando.jpg]</span>
@@ -259,8 +300,8 @@
 
         <!-- 1b. LAS PREGUNTAS GUÍA (Medium Bento) -->
         <section id="preguntas" class="bento-card span-2">
-          <div class="spoiler-wrapper locked" id="spoiler-preguntas">
-            <div class="spoiler-content">
+          <div>
+            <div>
               <div class="card-header">
                 <div class="icon-container">
                   <span class="icon"
@@ -285,16 +326,6 @@
                 <span>[Imagen: pasillo_prision_con_silueta_al_fondo.jpg]</span>
               </div>
             </div>
-            <!-- OVERLAY DE SPOILER -->
-            <div class="spoiler-overlay">
-              <iconify-icon class="spoiler-icon" icon="ph:warning-fill"></iconify-icon>
-              <h3 class="spoiler-title">SPOILER</h3>
-              <p class="spoiler-text">
-                Haz clic en este cuadro para ocultar esto y ver el contenido. Sabiendo que es
-                SPOILER del juego.
-              </p>
-              <div class="spoiler-btn">Revelar Contenido</div>
-            </div>
           </div>
         </section>
 
@@ -318,14 +349,14 @@
                 sobre ellos.
               </p>
             </div>
-            <div class="spoiler-overlay">
-              <iconify-icon class="spoiler-icon" icon="ph:warning-fill"></iconify-icon>
-              <h3 class="spoiler-title">SPOILER</h3>
+            <div class="spoiler-overlay" data-spoiler-type="identity">
+              <iconify-icon class="spoiler-icon" icon="ph:users-three-fill"></iconify-icon>
+              <h3 class="spoiler-title">SECRETOS DE LOS SUPERVIVIENTES</h3>
               <p class="spoiler-text">
-                Haz clic en este cuadro para ocultar esto y ver el contenido. Sabiendo que es
-                SPOILER del juego.
+                Revela el vínculo de los habitantes con la isla y por qué sus historias no son
+                del todo fiables.
               </p>
-              <div class="spoiler-btn">Revelar Contenido</div>
+              <div class="spoiler-btn">Descubrir sus historias</div>
             </div>
           </div>
         </section>
@@ -431,22 +462,22 @@
             </div>
 
             <!-- OVERLAY DE SPOILER -->
-            <div class="spoiler-overlay">
-              <iconify-icon class="spoiler-icon" icon="ph:warning-fill"></iconify-icon>
-              <h3 class="spoiler-title">SPOILER</h3>
+            <div class="spoiler-overlay" data-spoiler-type="ending">
+              <iconify-icon class="spoiler-icon" icon="ph:boat-fill"></iconify-icon>
+              <h3 class="spoiler-title">EL DESENLACE</h3>
               <p class="spoiler-text">
-                Haz clic en este cuadro para ocultar esto y ver el contenido. Sabiendo que es
-                SPOILER del juego.
+                Se revelan la ruta de escape, las decisiones de la balsa y ejemplos de las
+                moralejas finales.
               </p>
-              <div class="spoiler-btn">Revelar Contenido</div>
+              <div class="spoiler-btn">Ver el final</div>
             </div>
           </div>
         </section>
 
         <!-- 3. LA HISTORIA (Full Width Bento) -->
         <section id="historia" class="bento-card span-full">
-          <div class="spoiler-wrapper locked" id="spoiler-historia">
-            <div class="spoiler-content">
+          <div>
+            <div>
               <div class="card-header">
                 <div class="icon-container">
                   <span class="icon"
@@ -497,15 +528,6 @@
               <div class="img-wrapper">
                 <span>[Vídeo: cinemática_de_apertura_el_despertar.mp4]</span>
               </div>
-            </div>
-            <div class="spoiler-overlay">
-              <iconify-icon class="spoiler-icon" icon="ph:warning-fill"></iconify-icon>
-              <h3 class="spoiler-title">SPOILER</h3>
-              <p class="spoiler-text">
-                Haz clic en este cuadro para ocultar esto y ver el contenido. Sabiendo que es
-                SPOILER del juego.
-              </p>
-              <div class="spoiler-btn">Revelar Contenido</div>
             </div>
           </div>
         </section>
@@ -568,8 +590,8 @@
 
             <!-- INVENTARIO DINÁMICO (Pequeño) -->
             <div class="core-item span-1">
-              <div class="spoiler-wrapper locked" id="spoiler-inventario-dinamico">
-                <div class="spoiler-content">
+              <div>
+                <div>
                   <div class="card-header">
                     <div class="icon-container">
                       <span class="icon"
@@ -592,19 +614,13 @@
                     <li><b>Límite máximo:</b> 8 espacios.</li>
                   </ul>
                 </div>
-                <div class="spoiler-overlay">
-                  <iconify-icon class="spoiler-icon" icon="ph:warning-fill"></iconify-icon>
-                  <h3 class="spoiler-title">SPOILER</h3>
-                  <p class="spoiler-text">Haz clic para revelar.</p>
-                  <div class="spoiler-btn">Revelar</div>
-                </div>
               </div>
             </div>
 
             <!-- ILUMINACIÓN (Pequeño) -->
             <div class="core-item span-1">
-              <div class="spoiler-wrapper locked" id="spoiler-iluminacion">
-                <div class="spoiler-content">
+              <div>
+                <div>
                   <div class="card-header">
                     <div class="icon-container">
                       <span class="icon"
@@ -639,12 +655,6 @@
                       vídeo.
                     </li>
                   </ul>
-                </div>
-                <div class="spoiler-overlay">
-                  <iconify-icon class="spoiler-icon" icon="ph:warning-fill"></iconify-icon>
-                  <h3 class="spoiler-title">SPOILER</h3>
-                  <p class="spoiler-text">Haz clic para revelar.</p>
-                  <div class="spoiler-btn">Revelar</div>
                 </div>
               </div>
             </div>
@@ -960,8 +970,8 @@
 
         <!-- 6. INVENTARIO (Mitad Izquierda, Span 2) -->
         <section id="inventario" class="bento-card span-2 glass-card">
-          <div class="spoiler-wrapper locked html-style-2664cee6" id="spoiler-inventario">
-            <div class="spoiler-content html-style-2664cee6">
+          <div class="html-style-2664cee6">
+            <div class="html-style-2664cee6">
               <div class="card-header">
                 <div class="icon-container">
                   <span class="icon"><iconify-icon icon="ph:backpack"></iconify-icon></span>
@@ -970,7 +980,8 @@
               </div>
               <p class="text-muted text-sm mt-2">
                 Todos los objetos del juego. Haz clic en las cabeceras para ordenar o usa los
-                filtros.
+                filtros. Los usos y procedencias se consultan a demanda; los objetos de misión
+                quedan clasificados para no adelantar la historia.
               </p>
 
               <div class="inventory-filters mt-4" id="inventoryFilters">
@@ -1230,22 +1241,14 @@
             </div>
 
             <!-- OVERLAY DE SPOILER -->
-            <div class="spoiler-overlay">
-              <iconify-icon class="spoiler-icon" icon="ph:warning"></iconify-icon>
-              <h3 class="spoiler-title">SPOILER</h3>
-              <p class="spoiler-text">
-                Haz clic en este cuadro para ocultar esto y ver el contenido.
-              </p>
-              <div class="spoiler-btn">Revelar Contenido</div>
-            </div>
           </div>
         </section>
 
         <!-- 7. SISTEMA DE CRAFTEO TABLAS (Mitad Derecha, Span 2) -->
         <section id="crafteo" class="bento-card span-2 glass-card">
           <!-- Envuelto en el Spoiler -->
-          <div class="spoiler-wrapper locked html-style-2664cee6" id="spoiler-crafteo">
-            <div class="spoiler-content html-style-2664cee6">
+          <div class="html-style-2664cee6">
+            <div class="html-style-2664cee6">
               <div class="card-header">
                 <div class="icon-container">
                   <span class="icon"><iconify-icon icon="ph:list-plus"></iconify-icon></span>
@@ -1254,7 +1257,8 @@
               </div>
               <p class="text-muted text-sm mt-2">
                 Estaciones, recetas y comparativas. Haz clic en las cabeceras para ordenar o
-                usa los filtros.
+                usa los filtros. Los ingredientes y desbloqueos se revelan solo si los consultas;
+                la receta de la balsa permanece clasificada.
               </p>
 
               <div class="inventory-filters mt-4" id="craftFilters">
@@ -1373,14 +1377,6 @@
             </div>
 
             <!-- OVERLAY DE SPOILER -->
-            <div class="spoiler-overlay">
-              <iconify-icon class="spoiler-icon" icon="ph:warning"></iconify-icon>
-              <h3 class="spoiler-title">SPOILER</h3>
-              <p class="spoiler-text">
-                Haz clic en este cuadro para ocultar esto y ver el contenido.
-              </p>
-              <div class="spoiler-btn">Revelar Contenido</div>
-            </div>
           </div>
         </section>
 
@@ -2107,8 +2103,8 @@
 
         <!-- 7. DISEÑO DE NIVELES (Pestañas Interactivas) -->
         <section id="niveles" class="bento-card span-full glass-card">
-          <div class="spoiler-wrapper locked" id="spoiler-niveles">
-            <div class="spoiler-content">
+          <div>
+            <div>
               <div class="card-header center-align">
                 <div class="icon-container justify-center">
                   <span class="icon"><iconify-icon icon="ph:buildings"></iconify-icon></span>
@@ -2281,15 +2277,6 @@
               </p>
             </div>
 
-            <div class="spoiler-overlay">
-              <iconify-icon class="spoiler-icon" icon="ph:warning"></iconify-icon>
-              <h3 class="spoiler-title">SPOILER</h3>
-              <p class="spoiler-text">
-                Haz clic en este cuadro para ocultar esto y ver el contenido. Sabiendo que es
-                SPOILER del juego.
-              </p>
-              <div class="spoiler-btn">Revelar Contenido</div>
-            </div>
           </div>
         </section>
 
@@ -2833,11 +2820,13 @@
                   </div>
                 </div>
               </div>
-              <div class="spoiler-overlay">
-                <iconify-icon class="spoiler-icon" icon="ph:warning"></iconify-icon>
-                <h3 class="spoiler-title">SPOILER</h3>
-                <p class="spoiler-text">Haz clic para revelar.</p>
-                <div class="spoiler-btn">Revelar</div>
+              <div class="spoiler-overlay" data-spoiler-type="secret">
+                <iconify-icon class="spoiler-icon" icon="ph:key-fill"></iconify-icon>
+                <h3 class="spoiler-title">MISIONES SECRETAS</h3>
+                <p class="spoiler-text">
+                  Descubre condiciones ocultas, encuentros especiales y recompensas opcionales.
+                </p>
+                <div class="spoiler-btn">Revelar las misiones</div>
               </div>
             </div>
           </div>
@@ -2851,8 +2840,8 @@
           <div class="punish-npc-split">
             <!-- ══════════════ COLUMNA IZQUIERDA: CASTIGOS (35%) ══════════════ -->
             <div class="punish-npc-left">
-              <div class="spoiler-wrapper locked" id="spoiler-castigos">
-                <div class="spoiler-content">
+              <div>
+                <div>
                   <!-- Nuevo Header Castigos -->
                   <div class="icon-container mb-2 html-style-a261f665">
                     <span class="icon html-style-966a4ce6"
@@ -2942,20 +2931,14 @@
                     </div>
                   </div>
                 </div>
-                <div class="spoiler-overlay">
-                  <iconify-icon class="spoiler-icon" icon="ph:warning-fill"></iconify-icon>
-                  <h3 class="spoiler-title">SPOILER</h3>
-                  <p class="spoiler-text">Haz clic para revelar.</p>
-                  <div class="spoiler-btn">Revelar</div>
-                </div>
               </div>
             </div>
 
             <!-- ══════════════ COLUMNA DERECHA: NPCs (arriba) + CONFIANZA (abajo) ══════════════ -->
             <div class="punish-npc-right">
               <!-- NPCs (ENVUELTO EN SPOILER IGUAL QUE LA IZQUIERDA) -->
-              <div class="spoiler-wrapper locked html-style-75eabf0b" id="spoiler-npc">
-                <div class="spoiler-content">
+              <div class="html-style-75eabf0b">
+                <div>
                   <!-- Header NPCs -->
                   <div class="icon-container mb-2 html-style-34ee7144">
                     <span class="icon html-style-7ba4632d">
@@ -3037,12 +3020,6 @@
                 </div>
 
                 <!-- OVERLAY DE SPOILER (Igual que el de la izquierda) -->
-                <div class="spoiler-overlay">
-                  <iconify-icon class="spoiler-icon" icon="ph:warning-fill"></iconify-icon>
-                  <h3 class="spoiler-title">SPOILER</h3>
-                  <p class="spoiler-text">Haz clic para revelar.</p>
-                  <div class="spoiler-btn">Revelar</div>
-                </div>
               </div>
 
               <!-- Separador horizontal -->
@@ -3247,8 +3224,8 @@
               <h2>Logros estilo Steam</h2>
             </div>
             <p class="text-muted mt-2 html-style-19b8ad2d">
-              10 logros que marcan hitos del juego. Uno de ellos permanece oculto hasta que se
-              desbloquea.
+              <span class="achievement-count">55</span> logros de exploración, supervivencia,
+              historia y colección. Varios permanecen ocultos hasta desbloquearlos.
             </p>
           </div>
 
@@ -3384,9 +3361,9 @@
                 <iconify-icon icon="ph:lock-fill"></iconify-icon>
               </div>
               <div class="achievement-body">
-                <div class="achievement-name">Pactó Con el Espejo</div>
+                <div class="achievement-name">Logro oculto</div>
                 <div class="achievement-desc">
-                  Logro secreto: no se revela su condición hasta desbloquearlo.
+                  Se revelará al desbloquearlo.
                 </div>
               </div>
               <div class="achievement-status">
@@ -5113,14 +5090,14 @@
               </div>
             </div>
             <!-- OVERLAY DE SPOILER -->
-            <div class="spoiler-overlay">
-              <iconify-icon class="spoiler-icon" icon="ph:warning-fill"></iconify-icon>
-              <h3 class="spoiler-title">SPOILER</h3>
+            <div class="spoiler-overlay" data-spoiler-type="archive">
+              <iconify-icon class="spoiler-icon" icon="ph:brain-fill"></iconify-icon>
+              <h3 class="spoiler-title">ARCHIVO DE EVENTOS DE TERROR</h3>
               <p class="spoiler-text">
-                Haz clic en este cuadro para ocultar esto y ver el contenido. Sabiendo que es
-                SPOILER del juego.
+                Contiene 65 ideas de sustos, apariciones y giros de juego; abrirlo revela
+                sorpresas antes de encontrarlas.
               </p>
-              <div class="spoiler-btn">Revelar Contenido</div>
+              <div class="spoiler-btn">Explorar las 65 ideas</div>
             </div>
           </div>
         </section>

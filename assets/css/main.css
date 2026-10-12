@@ -5415,9 +5415,9 @@ metric-banner {
     .hero {
         min-height: 100dvh;
         align-content: start;
-        padding-top: 4.75rem;
+        padding-top: 6.75rem;
         padding-bottom: 1.5rem;
-        row-gap: 1rem;
+        row-gap: 10rem;
     }
 
     .hero-content {

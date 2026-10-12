@@ -230,7 +230,7 @@ iconify-icon {
     -webkit-touch-callout: none;
 }
 
-::-webkit-scrollbar-track {
+::-webkit-scrollbar {
     width: 6px;
 }
 

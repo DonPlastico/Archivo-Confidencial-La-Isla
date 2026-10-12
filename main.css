@@ -2079,6 +2079,10 @@ metric-banner {
     table-layout: fixed;
 }
 
+.sortable-table tbody tr[hidden] {
+    display: none;
+}
+
 .sortable-table th {
     font-weight: 700;
     color: #fff;

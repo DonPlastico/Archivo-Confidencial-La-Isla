@@ -57,7 +57,8 @@
         this.x += Math.sin(this.drift) * 0.035 * delta;
         this.y += Math.cos(this.drift * 0.7) * 0.025 * delta;
 
-        const wrapped = this.x < -4 || this.x > width + 4 || this.y < -4 || this.y > height + 4;
+        const wrapped =
+          this.x < -4 || this.x > width + 4 || this.y < -4 || this.y > height + 4;
         if (this.x < -4) this.x = width + 4;
         else if (this.x > width + 4) this.x = -4;
         if (this.y < -4) this.y = height + 4;
@@ -206,8 +207,8 @@
       "pointermove",
       (event) => {
         if (event.pointerType === "mouse") {
-          pointer.targetX = ((event.clientX / width) - 0.5) * 18;
-          pointer.targetY = ((event.clientY / height) - 0.5) * 12;
+          pointer.targetX = (event.clientX / width - 0.5) * 18;
+          pointer.targetY = (event.clientY / height - 0.5) * 12;
         }
       },
       { passive: true },
@@ -426,7 +427,9 @@
 
     trigger.addEventListener("click", () => setNavigationOpen(true));
     overlay.addEventListener("click", () => setNavigationOpen(false));
-    drawer.querySelector(".close-btn")?.addEventListener("click", () => setNavigationOpen(false));
+    drawer
+      .querySelector(".close-btn")
+      ?.addEventListener("click", () => setNavigationOpen(false));
     search?.addEventListener("input", filterNavigation);
     filterNavigation();
 
@@ -444,8 +447,7 @@
       const target = event.target;
       const isTyping =
         target instanceof HTMLElement &&
-        (target.isContentEditable ||
-          ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName));
+        (target.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName));
 
       if (event.key === "/" && !isTyping) {
         event.preventDefault();
@@ -464,7 +466,7 @@
 
       const focusable = Array.from(
         drawer.querySelectorAll(
-          'button:not([disabled]), input:not([disabled]), a:not([hidden])',
+          "button:not([disabled]), input:not([disabled]), a:not([hidden])",
         ),
       );
       const first = focusable[0];
@@ -553,8 +555,7 @@
       button.addEventListener("click", () => applyFilter(button));
     });
     applyFilter(
-      filterButtons.find((button) => button.classList.contains("active")) ||
-        filterButtons[0],
+      filterButtons.find((button) => button.classList.contains("active")) || filterButtons[0],
     );
 
     const tableBody = table.tBodies[0];
@@ -607,11 +608,7 @@
           if (aMission !== bMission) return aMission ? 1 : -1;
 
           const comparison = collator.compare(a.value, b.value);
-          return comparison === 0
-            ? a.index - b.index
-            : ascending
-              ? comparison
-              : -comparison;
+          return comparison === 0 ? a.index - b.index : ascending ? comparison : -comparison;
         });
 
       sortedRows.forEach(({ row }) => body.appendChild(row));
@@ -654,14 +651,30 @@
     const achievements = [
       ["Primeros auxilios", "Usa un consumible por primera vez.", "ph:first-aid-kit"],
       ["Sin mirar atrás", "Cruza una zona exterior durante la noche.", "ph:moon-stars-fill"],
-      ["La luz aguanta", "Completa un tramo con la misma fuente de luz.", "ph:flashlight-fill"],
+      [
+        "La luz aguanta",
+        "Completa un tramo con la misma fuente de luz.",
+        "ph:flashlight-fill",
+      ],
       ["Manos ocupadas", "Llena todos los espacios del inventario.", "ph:backpack-fill"],
-      ["Nada se desperdicia", "Fabrica un objeto usando materiales recogidos.", "ph:hammer-fill"],
+      [
+        "Nada se desperdicia",
+        "Fabrica un objeto usando materiales recogidos.",
+        "ph:hammer-fill",
+      ],
       ["Un lugar seguro", "Descansa por primera vez junto a una hoguera.", "ph:campfire-fill"],
       ["Oído atento", "Evita una amenaza guiándote solo por el sonido.", "ph:ear-fill"],
-      ["La isla escribe", "Lee una nota que cambie tu interpretación de una zona.", "ph:notebook-fill"],
+      [
+        "La isla escribe",
+        "Lee una nota que cambie tu interpretación de una zona.",
+        "ph:notebook-fill",
+      ],
       ["Punto de referencia", "Consulta el GPS en tres zonas distintas.", "ph:map-pin-fill"],
-      ["Grabado en cinta", "Registra una anomalía con la cámara de vídeo.", "ph:video-camera-fill"],
+      [
+        "Grabado en cinta",
+        "Registra una anomalía con la cámara de vídeo.",
+        "ph:video-camera-fill",
+      ],
       ["A oscuras", "Sobrevive a un apagón sin recibir daño.", "ph:lightning-slash-fill"],
       ["Paso ligero", "Cruza una zona vigilada sin hacer ruido.", "ph:footprints-fill"],
       ["Manitas", "Repara un dispositivo en una mesa de trabajo.", "ph:wrench-fill"],
@@ -669,21 +682,49 @@
       ["Palabra cumplida", "Mantén una promesa hecha a un NPC.", "ph:seal-check-fill"],
       ["La ruta larga", "Visita todas las zonas exteriores.", "ph:signpost-fill"],
       ["Piedra angular", "Reúne materiales de tres categorías distintas.", "ph:shapes-fill"],
-      ["Sin dejar rastro", "Escapa de una persecución sin usar objetos arrojadizos.", "ph:person-simple-run-fill"],
+      [
+        "Sin dejar rastro",
+        "Escapa de una persecución sin usar objetos arrojadizos.",
+        "ph:person-simple-run-fill",
+      ],
       ["Hilo de Ariadna", "Regresa a una zona segura desde las ruinas.", "ph:git-branch-fill"],
-      ["El último fósforo", "Enciende una antorcha cuando la luz esté a punto de agotarse.", "ph:fire-fill"],
+      [
+        "El último fósforo",
+        "Enciende una antorcha cuando la luz esté a punto de agotarse.",
+        "ph:fire-fill",
+      ],
       ["Voces conocidas", "Escucha todos los mensajes de una grabadora.", "ph:waveform-fill"],
-      ["Testigo incómodo", "Registra una aparición y vuelve a verla en el archivo.", "ph:eye-fill"],
-      ["Ojos abiertos", "Detecta una pista antes de que aparezca en el diario.", "ph:eye-fill"],
+      [
+        "Testigo incómodo",
+        "Registra una aparición y vuelve a verla en el archivo.",
+        "ph:eye-fill",
+      ],
+      [
+        "Ojos abiertos",
+        "Detecta una pista antes de que aparezca en el diario.",
+        "ph:eye-fill",
+      ],
       ["Todo en orden", "Organiza el inventario sin descartar objetos.", "ph:rows-fill"],
       ["Costura de emergencia", "Repara una prenda durante la expedición.", "ph:needle-fill"],
       ["Calor prestado", "Cocina una ración en una hoguera.", "ph:cooking-pot-fill"],
       ["No era el viento", "Sobrevive a tu primer encuentro con una entidad.", "ph:wind-fill"],
       ["Cinta completa", "Reproduce una grabación hasta el final.", "ph:film-strip-fill"],
-      ["Trabajo de campo", "Encuentra una pista en cada tipo de zona.", "ph:magnifying-glass-fill"],
+      [
+        "Trabajo de campo",
+        "Encuentra una pista en cada tipo de zona.",
+        "ph:magnifying-glass-fill",
+      ],
       ["La llave correcta", "Abre una puerta cerrada sin romper la ganzúa.", "ph:key-fill"],
-      ["Aguanta un poco más", "Termina un capítulo con la Cordura por debajo del 25%.", "ph:heartbeat-fill"],
-      ["Sin perder el hilo", "Completa dos objetivos seguidos sin consultar el diario.", "ph:book-open-fill"],
+      [
+        "Aguanta un poco más",
+        "Termina un capítulo con la Cordura por debajo del 25%.",
+        "ph:heartbeat-fill",
+      ],
+      [
+        "Sin perder el hilo",
+        "Completa dos objetivos seguidos sin consultar el diario.",
+        "ph:book-open-fill",
+      ],
       ["Recuerdo recuperado", "Completa la misión El Peso del Recuerdo.", "ph:ear-fill"],
       ...Array.from({ length: 12 }, () => ({ hidden: true })),
     ];
@@ -709,9 +750,7 @@
       name.textContent = hidden ? "Logro oculto" : achievement[0];
       const description = document.createElement("div");
       description.className = "achievement-desc";
-      description.textContent = hidden
-        ? "Se revelará al desbloquearlo."
-        : achievement[1];
+      description.textContent = hidden ? "Se revelará al desbloquearlo." : achievement[1];
       body.append(name, description);
 
       const status = document.createElement("div");
@@ -1041,10 +1080,7 @@
             .map((part) => part.replace(/[.!?]+$/, ""))
             .join(". ") || "Revelar contenido oculto",
         );
-        overlay.setAttribute(
-          "aria-expanded",
-          String(wrapper.classList.contains("unlocked")),
-        );
+        overlay.setAttribute("aria-expanded", String(wrapper.classList.contains("unlocked")));
       }
       const content = wrapper.querySelector(".spoiler-content");
       if (content) {

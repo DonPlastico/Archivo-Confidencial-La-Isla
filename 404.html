@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="El expediente solicitado no existe o ya no está disponible." />
+    <meta name="theme-color" content="#050505" />
+    <title>Expediente no encontrado — Archivo Confidencial: La Isla</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/404.css" />
+  </head>
+  <body class="error-page">
+    <header class="error-topbar">
+      <a class="error-brand" href="index.html" aria-label="Archivo Confidencial: volver al inicio">
+        <span class="error-brand-mark" aria-hidden="true">AC</span>
+        <span>ARCHIVO CONFIDENCIAL <b>· LA ISLA</b></span>
+      </a>
+      <span class="error-classification"><i></i> SISTEMA DE ARCHIVO</span>
+    </header>
+
+    <main class="error-main">
+      <section class="error-card" aria-labelledby="error-title">
+        <div class="error-card-meta">
+          <span><i></i> ESTADO DEL EXPEDIENTE</span>
+          <span>REF. 404 / NO LOCALIZADO</span>
+        </div>
+
+        <div class="error-content">
+          <div class="error-copy">
+            <p class="error-eyebrow">ARCHIVO CONFIDENCIAL <span>/</span> ACCESO INTERRUMPIDO</p>
+            <p class="error-code" aria-label="Error 404">4<span>0</span>4</p>
+            <h1 id="error-title">Este expediente <span>no existe.</span></h1>
+            <p class="error-description">
+              La página que buscas se ha perdido entre los registros, ha cambiado de ubicación
+              o nunca llegó a formar parte del archivo.
+            </p>
+
+            <div class="error-actions">
+              <a class="error-button error-button-primary" href="index.html">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z" />
+                </svg>
+                Volver al inicio
+              </a>
+              <a class="error-button error-button-secondary" href="legal.html">
+                Consultar información
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 17 17 7M7 7h10v10" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="error-art" aria-hidden="true">
+            <div class="error-art-frame">
+              <span class="error-art-index">FIG. 04</span>
+              <svg viewBox="0 0 180 210" role="presentation">
+                <path class="error-file-outline" d="M48 20h55l31 31v137H48z" />
+                <path class="error-file-fold" d="M103 20v32h31" />
+                <path class="error-file-mark" d="M70 88h42M70 105h42" />
+                <path class="error-eye" d="M66 143s12-17 25-17 25 17 25 17-12 17-25 17-25-17-25-17Z" />
+                <circle class="error-eye-pupil" cx="91" cy="143" r="6" />
+                <path class="error-scratch" d="m42 78 13-7m70 101 13 7M49 170l11-5m55-90 12-7" />
+              </svg>
+              <span class="error-art-stamp">REGISTRO<br />INEXISTENTE</span>
+            </div>
+            <p>NO HAY NINGÚN REGISTRO EN ESTA UBICACIÓN</p>
+          </div>
+        </div>
+
+        <div class="error-card-footer">
+          <span>SI HAS LLEGADO AQUÍ DESDE UN ENLACE, PUEDE ESTAR DESACTUALIZADO.</span>
+          <span>LA ISLA <b>·</b> FIN DEL REGISTRO</span>
+        </div>
+      </section>
+
+      <footer class="error-footer">
+        <span>© <span data-current-year>2026</span> ARCHIVO CONFIDENCIAL: LA ISLA</span>
+        <a href="legal.html">Aviso legal y derechos</a>
+      </footer>
+    </main>
+
+    <script>
+      const year = document.querySelector("[data-current-year]");
+      if (year) year.textContent = String(new Date().getFullYear());
+    </script>
+  </body>
+</html>

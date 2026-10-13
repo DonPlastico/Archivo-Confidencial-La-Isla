@@ -3,7 +3,8 @@
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     background:
         radial-gradient(ellipse at 76% 48%, rgba(255, 255, 255, 0.055), transparent 34%),
         radial-gradient(ellipse at 12% 100%, rgba(255, 255, 255, 0.035), transparent 36%),
